@@ -1,0 +1,11 @@
+[project]
+name = "fastapi-url-shortener"
+version = "0.1.0"
+description = "Url shortener on FastAPI"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.127.0",
+    "pydantic[all]>=2.12.5",
+    "uvicorn>=0.40.0",
+]
