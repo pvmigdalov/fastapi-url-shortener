@@ -1,0 +1,17 @@
+services:  
+  pg:
+    image: postgres:17.7-bookworm
+    environment:
+      POSTGRES_DB: short_urls
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /var/lib/postgresql/data
+    ports:
+     - "5433:5433"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d short_urls" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3

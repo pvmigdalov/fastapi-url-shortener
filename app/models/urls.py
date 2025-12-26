@@ -1,21 +1,18 @@
 from datetime import datetime, timezone
-from functools import partial
 
-from sqlalchemy import DateTime, String, func
+from sqlalchemy import func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
-nowutc = partial(datetime.now, timezone.utc)
-
 class Base(DeclarativeBase):
+    id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
     created_at: Mapped[datetime] = mapped_column(
-        default=nowutc,
+        default=lambda: datetime.now(timezone.utc),
         server_default=func.now(),
         nullable=False
     )
 
-class Urls(Base):
+class URLs(Base):
     __tablename__ = "urls"
 
-    url_in: Mapped[str] = mapped_column(unique=True, nullable=False)
-    url_out: Mapped[str] = mapped_column(unique=True, nullable=False)
+    url: Mapped[str] = mapped_column(unique=True, nullable=False)
