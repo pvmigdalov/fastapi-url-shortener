@@ -6,7 +6,7 @@ from fastapi.responses import HTMLResponse
 import uvicorn
 
 from schemas import ShortURLCreate
-from settings import Settings
+from database import Settings
 
 app = FastAPI()
 
