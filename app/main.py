@@ -6,6 +6,7 @@ from fastapi.responses import HTMLResponse
 import uvicorn
 
 from schemas import ShortURLCreate
+from settings import Settings
 
 app = FastAPI()
 
@@ -16,6 +17,7 @@ async def welcome():
 @app.post("/short_url")
 async def create_short_url(req: Request, url: Annotated[ShortURLCreate, Body(...)]) -> ShortURLCreate:
     print(req.base_url)
+    print(Settings.db_url)
     return ShortURLCreate(
         url="http://test.test"
     )
