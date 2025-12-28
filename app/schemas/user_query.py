@@ -1,5 +1,7 @@
+from typing import Annotated
+
 from pydantic import AnyHttpUrl, BaseModel
 
 
 class ShortURLCreate(BaseModel):
-    url: AnyHttpUrl
+    url: Annotated[str, AnyHttpUrl]
