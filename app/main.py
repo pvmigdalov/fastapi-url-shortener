@@ -21,8 +21,7 @@ async def get_short_url(req: Request, url: Annotated[ShortURLCreate, Body(...)])
 
 @app.get("/{b64_id}", status_code=status.HTTP_302_FOUND)
 async def redirect_to(b64_id: str):
-    #redirect_url = get_redirect_url(b64_id)
-    redirect_url = "https://ya.ru"
+    redirect_url = get_redirect_url(b64_id)
     if redirect_url is None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST)
     return RedirectResponse(redirect_url)
