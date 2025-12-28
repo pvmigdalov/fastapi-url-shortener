@@ -16,7 +16,7 @@ async def welcome():
 
 @app.post("/short_url")
 async def get_short_url(req: Request, url: Annotated[ShortURLCreate, Body(...)]) -> ShortURLCreate:
-    short_url = await create_short_url(url.url, req.base_url)
+    short_url = await create_short_url(url.url, str(req.base_url))
     return ShortURLCreate(url=short_url)
 
 @app.get("/{b64_id}", status_code=status.HTTP_302_FOUND)

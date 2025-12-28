@@ -1,1 +1,1 @@
-from .urls import URLs
+from .urls import Base, URLs
