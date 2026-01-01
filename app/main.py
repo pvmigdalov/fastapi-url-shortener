@@ -16,15 +16,18 @@ async def welcome():
 
 @app.post("/short_url")
 async def get_short_url(req: Request, url: Annotated[ShortURLCreate, Body(...)]) -> ShortURLCreate:
-    short_url = await create_short_url(url.url, str(req.base_url))
+    short_url = await create_short_url(
+        str(url.url), 
+        str(req.base_url)
+    )
     return ShortURLCreate(url=short_url)
 
-@app.get("/{b64_id}", status_code=status.HTTP_302_FOUND)
+@app.get("/{b64_id}")
 async def redirect_to(b64_id: str):
-    redirect_url = get_redirect_url(b64_id)
+    redirect_url = await get_redirect_url(b64_id)
     if redirect_url is None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST)
-    return RedirectResponse(redirect_url)
+    return RedirectResponse(redirect_url, status_code=status.HTTP_302_FOUND)
 
 
 if __name__ == "__main__":
