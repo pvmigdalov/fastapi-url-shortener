@@ -9,6 +9,7 @@ import uvicorn
 from database import get_db_session
 from schemas import ShortURLCreate
 from service import create_short_url, get_redirect_url
+from exceptions import SlugAlreadyExists
 
 app = FastAPI()
 session_dependency = Annotated[AsyncSession, Depends(get_db_session)]
@@ -23,12 +24,16 @@ async def get_short_url(
     url: Annotated[ShortURLCreate, Body(...)],
     session: session_dependency
 ) -> ShortURLCreate:
-    created_url = await create_short_url(
-        str(url.url),
-        url.slug, 
-        str(req.base_url),
-        session
-    )
+    try:
+        created_url = await create_short_url(
+            str(url.url),
+            url.slug, 
+            str(req.base_url),
+            session
+        )
+    except SlugAlreadyExists:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, detail="Slug already exists")
+
     return ShortURLCreate(
         url=created_url["short_url"], 
         slug=created_url["slug"]

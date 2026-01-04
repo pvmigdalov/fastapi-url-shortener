@@ -16,5 +16,5 @@ class Base(DeclarativeBase):
 class URLs(Base):
     __tablename__ = "urls"
 
-    url: Mapped[str] = mapped_column(nullable=False, unique=True)
+    url: Mapped[str] = mapped_column(nullable=False)
     slug: Mapped[str] = mapped_column(nullable=False, unique=True, index=True)

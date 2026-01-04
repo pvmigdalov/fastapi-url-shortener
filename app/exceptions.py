@@ -1,0 +1,2 @@
+class SlugAlreadyExists(Exception):
+    pass
