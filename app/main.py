@@ -23,24 +23,27 @@ async def get_short_url(
     url: Annotated[ShortURLCreate, Body(...)],
     session: session_dependency
 ) -> ShortURLCreate:
-    short_url = await create_short_url(
+    created_url = await create_short_url(
         str(url.url),
         url.slug, 
         str(req.base_url),
         session
     )
-    return ShortURLCreate(url=short_url)
+    return ShortURLCreate(
+        url=created_url["short_url"], 
+        slug=created_url["slug"]
+    )
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
-@app.get("/{b64_id}")
+@app.get("/{slug}")
 async def redirect_to(
-    b64_id: Annotated[str, Path(pattern=r"^[a-zA-Z0-9\-_]+$")],
+    slug: Annotated[str, Path(pattern=r"^[a-zA-Z0-9\-_]+$")],
     session: session_dependency
 ):
-    redirect_url = await get_redirect_url(b64_id, session)
+    redirect_url = await get_redirect_url(slug, session)
     if redirect_url is None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST)
     return RedirectResponse(redirect_url, status_code=status.HTTP_302_FOUND)

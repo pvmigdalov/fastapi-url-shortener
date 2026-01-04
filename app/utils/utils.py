@@ -1,3 +1,7 @@
+"""
+Данный модуль больше не используется
+"""
+
 import base64
 from typing import Any
 

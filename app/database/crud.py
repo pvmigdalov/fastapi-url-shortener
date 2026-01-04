@@ -11,7 +11,7 @@ async def add_url_to_db(url: str, slug: str | None, session: AsyncSession) -> UR
     await session.refresh(new_record)
     return new_record
 
-async def get_url_by_id(id: int, session: AsyncSession) -> URLs | None:
-    stmt = select(URLs).where(URLs.id == id)
+async def get_url_by_slug(slug: str, session: AsyncSession) -> URLs | None:
+    stmt = select(URLs).where(URLs.slug == slug)
     res = await session.execute(stmt)
     return res.scalar()
