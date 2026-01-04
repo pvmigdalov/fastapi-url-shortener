@@ -22,6 +22,6 @@ async def create_short_url(
 async def get_redirect_url(slug: str, session: AsyncSession) -> str | None:
     # db_id = gen_int_from_base64(b64_id)
     record = await get_url_by_slug(slug, session)
-    if not record is None:
+    if record is not None:
         return record.url
     
