@@ -4,7 +4,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import URLsCrudManager
 from exceptions import SlugAlreadyExists
-# from utils import gen_base64_from_int, gen_int_from_base64
 
 
 async def create_short_url(
