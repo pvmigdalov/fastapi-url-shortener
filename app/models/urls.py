@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
 class Base(DeclarativeBase):
-    id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc),
@@ -16,4 +16,5 @@ class Base(DeclarativeBase):
 class URLs(Base):
     __tablename__ = "urls"
 
-    url: Mapped[str] = mapped_column(nullable=False)
+    url: Mapped[str] = mapped_column(nullable=False, unique=True)
+    slug: Mapped[str] = mapped_column(nullable=False, unique=True, index=True)

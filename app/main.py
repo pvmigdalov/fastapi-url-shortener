@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import FastAPI, Request, Body, HTTPException, status
+from fastapi import FastAPI, Request, Body, Path, HTTPException, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 
 import uvicorn
@@ -22,8 +22,12 @@ async def get_short_url(req: Request, url: Annotated[ShortURLCreate, Body(...)])
     )
     return ShortURLCreate(url=short_url)
 
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
 @app.get("/{b64_id}")
-async def redirect_to(b64_id: str):
+async def redirect_to(b64_id: Annotated[str, Path(pattern=r"^[a-zA-Z0-9\-_]+$")]):
     redirect_url = await get_redirect_url(b64_id)
     if redirect_url is None:
         raise HTTPException(status.HTTP_400_BAD_REQUEST)
