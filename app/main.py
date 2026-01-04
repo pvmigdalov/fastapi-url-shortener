@@ -45,7 +45,7 @@ async def redirect_to(
 ):
     redirect_url = await get_redirect_url(slug, session)
     if redirect_url is None:
-        raise HTTPException(status.HTTP_400_BAD_REQUEST)
+        raise HTTPException(status.HTTP_404_NOT_FOUND)
     return RedirectResponse(redirect_url, status_code=status.HTTP_302_FOUND)
 
 
