@@ -22,10 +22,8 @@ async def create_short_url(
         "short_url": host + record.slug,
         "slug": record.slug
     }
-    # return host + gen_base64_from_int(new_record.id)
 
 async def get_redirect_url(slug: str, session: AsyncSession) -> str | None:
-    # db_id = gen_int_from_base64(b64_id)
     record = await URLsCrudManager.get_url_by_slug(slug, session)
     if record is not None:
         return record.url
