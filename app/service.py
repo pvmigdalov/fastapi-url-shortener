@@ -17,8 +17,6 @@ async def create_short_url(
         if await URLsCrudManager.check_slug_exists(slug, session):
             raise SlugAlreadyExists
     
-    # record = await URLsCrudManager.search_url(url, session)
-    # if record is None:
     record = await URLsCrudManager.add_url_to_db(url, slug, session)
     return {
         "short_url": host + record.slug,
