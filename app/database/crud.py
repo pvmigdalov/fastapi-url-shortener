@@ -8,6 +8,7 @@ async def add_url_to_db(url: str, slug: str | None, session: AsyncSession) -> UR
     new_record = URLs(url=url, slug=slug)
     session.add(new_record)
     await session.commit()
+    await session.refresh(new_record)
     return new_record
 
 async def get_url_by_id(id: int, session: AsyncSession) -> URLs | None:
