@@ -4,8 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from models import URLs
 
 
-async def add_url_to_db(url: str, session: AsyncSession) -> URLs:
-    new_record = URLs(url=url)
+async def add_url_to_db(url: str, slug: str | None, session: AsyncSession) -> URLs:
+    new_record = URLs(url=url, slug=slug)
     session.add(new_record)
     await session.commit()
     return new_record
