@@ -6,10 +6,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 import uvicorn
 
-from database import get_db_session
-from schemas import ShortURLCreate
-from service import create_short_url, get_redirect_url
-from exceptions import SlugAlreadyExists
+from app.database import get_db_session
+from app.schemas import ShortURLCreate
+from app.service import create_short_url, get_redirect_url
+from app.exceptions import SlugAlreadyExists
 
 app = FastAPI()
 session_dependency = Annotated[AsyncSession, Depends(get_db_session)]

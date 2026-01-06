@@ -2,8 +2,8 @@ from typing import Literal
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import URLsCrudManager
-from exceptions import SlugAlreadyExists
+from app.database import URLsCrudManager
+from app.exceptions import SlugAlreadyExists
 
 
 async def create_short_url(
