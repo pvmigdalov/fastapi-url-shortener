@@ -2,7 +2,7 @@ from typing import Literal
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.database import URLsCrudManager
+from app.crud import URLsCrudManager
 from app.exceptions import SlugAlreadyExists
 
 
